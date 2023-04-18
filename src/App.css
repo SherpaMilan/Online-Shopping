@@ -1,0 +1,32 @@
+/* ====== admin layout */
+.main {
+  min-height: 89vh;
+}
+
+/* ==== side bar */
+.sidebar {
+  display: flex;
+}
+
+.left {
+  width: 30%;
+}
+.right {
+  width: 70%;
+}
+
+.sideBar-content {
+  height: 100vh;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 30%;
+}
+
+.sideBar-content ul {
+  margin-left: 2rem;
+}
+
+.sideBar-content li {
+  line-height: 3rem;
+}
