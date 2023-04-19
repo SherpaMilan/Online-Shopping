@@ -1,11 +1,17 @@
+.wrapper {
+  background: rgba(167, 123, 34, 0.118);
+}
+
 /* ====== admin layout */
 .main {
   min-height: 89vh;
+  font-family: "PT Serif", serif;
 }
 
 /* ==== side bar */
 .sidebar {
   display: flex;
+  font-family: "PT Serif", serif;
 }
 
 .left {

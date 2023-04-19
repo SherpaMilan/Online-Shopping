@@ -1,21 +1,21 @@
 import React from "react";
 import { Header } from "./Header";
 import { Footer } from "./Footer";
-import { SideBar } from "./SideBar";
+import { Sidebar } from "./Sidebar";
 
-export const AdminLayout = () => {
+export const DefaultLayout = ({ children }) => {
   return (
     <div className="sidebar">
       <div className="left">
-        {/* sidbar */}
-        <SideBar />
+        {/* sidebar */}
+        <Sidebar />
       </div>
       <div className="right ">
-        {/* heder */}
+        {/* header */}
         <Header />
 
         {/* main body */}
-        <main className="main"></main>
+        <main className="main">{children}</main>
         {/* footer */}
         <Footer />
       </div>

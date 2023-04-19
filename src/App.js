@@ -1,25 +1,27 @@
 import "./App.css";
 import { ToastContainer } from "react-toastify";
-import { ImCamera } from "react-icons/im";
-import { Button } from "react-bootstrap";
+
 import { Routes, Route } from "react-router-dom";
-import SignUp from "./admin/pages/signin-signup/SignUp";
-import Home from "./buyer/pages/home/Home";
-import { AdminLayout } from "./admin/components/layout/AdminLayout";
+
+import { SignUp } from "./pages/signin-signup/SignUp";
+import { SignIn } from "./pages/signin-signup/SignIn";
+
+import Dashboard from "./pages/dashboard/Dashboard";
+import ResetPassword from "./pages/signin-signup/ResetPassword";
+import { Category } from "./pages/category/Category";
 
 function App() {
   return (
-    <div className="">
-      <AdminLayout />
+    <div className="wrapper">
       <Routes>
-        {/* public routes */}
-        <Route path="/" element={<Home />} />
-
         {/* admin routes */}
-        <Route path="admin/signup" element={<SignUp />} />
-        <Route path="admin/signin" element={<SignUp />} />
+        <Route path="signup" element={<SignUp />} />
+        <Route path="/" element={<SignIn />} />
 
+        <Route path="reset-password" element={<ResetPassword />} />
         {/* buyers routes */}
+        <Route path="dashboard" element={<Dashboard />} />
+        <Route path="category" element={<Category />} />
       </Routes>
 
       <ToastContainer />

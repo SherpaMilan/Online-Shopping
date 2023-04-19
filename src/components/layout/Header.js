@@ -3,6 +3,7 @@ import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import { GoSignIn, GoSignOut } from "react-icons/go";
 import { FaUserEdit } from "react-icons/fa";
+import { AiFillDashboard } from "react-icons/ai";
 import { Link } from "react-router-dom";
 
 export const Header = () => {
@@ -13,11 +14,14 @@ export const Header = () => {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="ms-auto">
-            <Link className="nav-link" to="/admin/signin">
+            <Link className="nav-link" to="/">
               <GoSignIn /> Sign In
             </Link>
-            <Link className="nav-link" to="/admin/signup">
+            <Link className="nav-link" to="/signup">
               <FaUserEdit /> Sign Up
+            </Link>
+            <Link className="nav-link" to="/dashboard">
+              <AiFillDashboard /> Dashboard
             </Link>
             <Link className="nav-link" to="#!">
               <GoSignOut /> Sign Out
