@@ -2,11 +2,11 @@ import React from "react";
 import { Container } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
-export const Sidebar = () => {
+export const SideBar = () => {
   return (
     <div className="bg-dark text-light pt-5 sideBar-content">
       <Container>
-        <h2 className="">Hello Admin</h2>
+        <h2 className="">MR. Admin</h2>
         <hr />
         <ul className="list-unstyled ">
           <li>
@@ -42,6 +42,11 @@ export const Sidebar = () => {
           <li>
             <Link className="nav-link fw-bold " to="/buyers">
               Buyers
+            </Link>
+          </li>
+          <li>
+            <Link className="nav-link fw-bold " to="/signup">
+              Create Admin
             </Link>
           </li>
         </ul>

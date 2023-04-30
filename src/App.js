@@ -1,29 +1,77 @@
 import "./App.css";
 import { ToastContainer } from "react-toastify";
-
+import { ImCamera } from "react-icons/im";
+import { Button } from "react-bootstrap";
 import { Routes, Route } from "react-router-dom";
-
+import ResetPassword from "./pages/signin-signup/ResetPassword";
+import Dashboard from "./pages/dashboard/Dashboard";
+import { onAuthStateChanged } from "firebase/auth";
+import { auth } from "./config/firebaseConfig";
+import { useDispatch } from "react-redux";
+import { getUserAction } from "./pages/user-state/userAction";
+import { PrivateRouter } from "./components/private-router/PrivateRouter";
+import Product from "./pages/product/Product";
 import { SignUp } from "./pages/signin-signup/SignUp";
 import { SignIn } from "./pages/signin-signup/SignIn";
-
-import Dashboard from "./pages/dashboard/Dashboard";
-import ResetPassword from "./pages/signin-signup/ResetPassword";
 import { Category } from "./pages/category/Category";
+import NewProduct from "./pages/product/NewProduct";
 
 function App() {
+  const dispatch = useDispatch();
+  onAuthStateChanged(auth, (user) => {
+    if (user?.uid) {
+      dispatch(getUserAction(user.uid));
+    }
+  });
   return (
     <div className="wrapper">
       <Routes>
-        {/* admin routes */}
-        <Route path="signup" element={<SignUp />} />
         <Route path="/" element={<SignIn />} />
-
         <Route path="reset-password" element={<ResetPassword />} />
-        {/* buyers routes */}
-        <Route path="dashboard" element={<Dashboard />} />
-        <Route path="category" element={<Category />} />
-      </Routes>
 
+        {/* admin routes */}
+        <Route
+          path="signup"
+          element={
+            <PrivateRouter>
+              <SignUp />
+            </PrivateRouter>
+          }
+        />
+        <Route
+          path="dashboard"
+          element={
+            <PrivateRouter>
+              <Dashboard />
+            </PrivateRouter>
+          }
+        />
+        <Route
+          path="category"
+          element={
+            <PrivateRouter>
+              <Category />
+            </PrivateRouter>
+          }
+        />
+        <Route
+          path="products"
+          element={
+            <PrivateRouter>
+              <Product />
+            </PrivateRouter>
+          }
+        />
+        <Route
+          path="product/new"
+          element={
+            <PrivateRouter>
+              <NewProduct />
+            </PrivateRouter>
+          }
+        />
+        <Route path="*" element={<h1>Page Not Found!</h1>} />
+      </Routes>
       <ToastContainer />
     </div>
   );

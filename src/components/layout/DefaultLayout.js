@@ -1,14 +1,14 @@
 import React from "react";
 import { Header } from "./Header";
 import { Footer } from "./Footer";
-import { Sidebar } from "./Sidebar";
+import { SideBar } from "./Sidebar";
 
 export const DefaultLayout = ({ children }) => {
   return (
     <div className="sidebar">
       <div className="left">
         {/* sidebar */}
-        <Sidebar />
+        <SideBar />
       </div>
       <div className="right ">
         {/* header */}

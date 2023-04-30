@@ -5,14 +5,23 @@ import { Button, Col, Container, Form, Row } from "react-bootstrap";
 import { Footer } from "../../components/layout/Footer";
 import { CustomInput } from "../../components/custom-input/CustomInput";
 import { createUserWithEmailAndPassword } from "firebase/auth";
-import { auth, db } from "../../config/firebaseConfig";
+import { auth } from "../../config/firebaseConfig";
 import { toast } from "react-toastify";
-import { doc, setDoc } from "firebase/firestore";
-import { useDispatch } from "react-redux";
+
+import { addNewAdminUserAction } from "../user-state/userAction";
+
+const initialState = {
+  fName: "",
+  lName: "",
+  phone: "",
+  email: "",
+  password: "",
+  confirmPassword: "",
+};
 
 export const SignUp = () => {
-  const [form, setForm] = useState({});
-  const dispatch = useDispatch();
+  const [form, setForm] = useState({ initialState });
+
   const [error, setError] = useState("");
 
   const handleOnChange = (e) => {
@@ -36,28 +45,29 @@ export const SignUp = () => {
 
   const handleOnSubmit = async (e) => {
     e.preventDefault();
+    console.log(form);
     try {
-      const { confirmPassword, email, name, password } = form;
+      const { password, confirmPassword, email, fName, lName, phone } = form;
       if (confirmPassword !== password) {
         return toast.error("Password do not match");
       }
 
       // createuser in firebase auth
-      const userPending = createUserWithEmailAndPassword(auth, email, password);
-      toast.promise(userPending, {
+      const userPromise = createUserWithEmailAndPassword(auth, email, password);
+      toast.promise(userPromise, {
         pending: "please wait",
       });
-      const { user } = await userPending;
+      const { user } = await userPromise;
 
-      // storing user in firestore
-      const obj = {
-        name,
-        email,
-      };
-      await setDoc(doc(db, "users", user.uid, obj));
-      console.log(user);
+      if (user?.uid) {
+        toast.success("New user has been created, you may sign in now!");
+        setForm(initialState);
+      }
 
-      // dispatch(setUser({ ...obj, uid: user.uid }));
+      // create user profile in use databs
+
+      const obj = { email, fName, lName, phone, uid: user.uid };
+      addNewAdminUserAction(obj);
     } catch (error) {}
   };
 
@@ -70,6 +80,7 @@ export const SignUp = () => {
       type: "text",
       placeholder: "elon",
       required: true,
+      value: form.fName,
     },
     {
       label: "Last Name",
@@ -77,12 +88,14 @@ export const SignUp = () => {
       type: "text",
       placeholder: "musk",
       required: true,
+      value: form.lName,
     },
     {
       label: "Phone",
       name: "phone",
       type: "text",
       placeholder: "04xxx",
+      value: form.phone,
     },
     {
       label: "Email",
@@ -90,6 +103,7 @@ export const SignUp = () => {
       type: "email",
       placeholder: "musk@email.com",
       required: true,
+      value: form.email,
     },
     {
       label: "Password",
@@ -97,6 +111,7 @@ export const SignUp = () => {
       type: "password",
       placeholder: "*******",
       required: true,
+      value: form.password,
     },
     {
       label: "Confirm Password",
@@ -104,6 +119,7 @@ export const SignUp = () => {
       type: "password",
       placeholder: "********",
       required: true,
+      value: form.confirmPassword,
     },
   ];
 
@@ -135,9 +151,9 @@ export const SignUp = () => {
                 </Button>
               </div>
 
-              <div className="text-end mt-4">
+              {/* <div className="text-end mt-4">
                 Already registered? <a href="/">Login</a> Now.
-              </div>
+              </div> */}
             </Form>
           </Col>
         </Row>

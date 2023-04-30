@@ -1,8 +1,11 @@
-import React, { useState } from "react";
+import React, { useEffect } from "react";
 import { Button } from "react-bootstrap";
 import Table from "react-bootstrap/Table";
 import { useDispatch, useSelector } from "react-redux";
-import { deleteCategoryAction } from "../../pages/category/categoryAction";
+import {
+  deleteCategoryAction,
+  fethCagegoriesAction,
+} from "../../pages/category/categoryAction";
 import { CustomModal } from "../modal/CustomModal";
 import { setShowModal } from "../../system/systemSlice";
 import { EditCategory } from "./EditCategory";
@@ -10,7 +13,12 @@ import { setSelectedCat } from "../../pages/category/categorySilce";
 
 export const CategoryTable = () => {
   const dispatch = useDispatch();
+
   const { cats } = useSelector((state) => state.cat);
+
+  useEffect(() => {
+    dispatch(fethCagegoriesAction());
+  }, [dispatch]);
 
   const handleOnDelete = (slug) => {
     if (window.confirm("Are you sure you want to delete this?")) {
