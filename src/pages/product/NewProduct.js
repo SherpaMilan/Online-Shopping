@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { DefaultLayout } from "../../components/layout/DefaultLayout";
 
 import { Link } from "react-router-dom";
@@ -12,13 +12,21 @@ import { addNewProductAction } from "./ProductAction";
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import { storage } from "../../config/firebaseConfig";
 import ProgressBar from "react-bootstrap/ProgressBar";
+import { fethCagegoriesAction } from "../category/categoryAction";
 
 const NewProduct = () => {
   const dispatch = useDispatch();
-  const [form, setForm] = useState({});
+  const [form, setForm] = useState({
+    status: "inactive",
+  });
   const { cats } = useSelector((state) => state.cat);
   const [image, setImage] = useState();
   const [progress, setProgress] = useState(0);
+
+  useEffect(() => {
+    dispatch(fethCagegoriesAction());
+  }, [dispatch]);
+
   //add handle onChange
   const handleOnChange = (e) => {
     const { name, value } = e.target;
@@ -154,7 +162,7 @@ const NewProduct = () => {
       <Form onSubmit={handleOnSubmit}>
         <Form.Group className="mt-3">
           <label htmlFor="">Select category</label>
-          <Form.Select name="parentCat" required>
+          <Form.Select name="parentCat" required onChange={handleOnChange}>
             <option value="">-- Select One --</option>
             {cats.map((item) => (
               <option value={item.slug}>{item.name}</option>

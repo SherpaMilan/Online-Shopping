@@ -1,21 +1,22 @@
 import React, { useEffect, useState } from "react";
-import { Button, Form } from "react-bootstrap";
-import { CustomInput } from "../custom-input/CustomInput";
+import { Form, Button, Table } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  addNewCategoryAction,
-  updateCategoryAction,
-} from "../../pages/category/categoryAction";
+import { EditCategory } from "../category-mgmt/EditCategory";
+import { CustomInput } from "../custom-input/CustomInput";
+import { CustomModal } from "../modal/CustomModal";
 
-export const EditCategory = () => {
-  const dispatch = useDispatch();
+import { addPaymentOptions, fetchPaymentOptions } from "./paymentAction";
+
+export const PaymentOptions = () => {
   const [form, setForm] = useState({});
-  const { selectedCat } = useSelector((state) => state.cat);
+  const dispatch = useDispatch();
 
+  const { paymentOption } = useSelector((state) => state.payment);
+  console.log(paymentOption);
   useEffect(() => {
-    setForm(selectedCat);
-  }, [selectedCat]);
-
+    dispatch(fetchPaymentOptions());
+    console.log(fetchPaymentOptions);
+  }, []);
   const handleOnChange = (e) => {
     const { name, value } = e.target;
 
@@ -27,13 +28,12 @@ export const EditCategory = () => {
 
   const handleOnSubmit = (e) => {
     e.preventDefault();
-    const { addAt, ...rest } = form;
+    let paymentid = Date.now().toString();
 
-    dispatch(updateCategoryAction(rest));
-    console.log(form);
+    dispatch(addPaymentOptions({ ...form, id: paymentid }));
   };
   return (
-    <div style={{ maxWidth: "500px", margin: "auto" }}>
+    <>
       <Form
         onSubmit={handleOnSubmit}
         className="d-flex gap-2 justify-content-between border rounded shadow-lg p-3 cat-form"
@@ -58,26 +58,46 @@ export const EditCategory = () => {
         <CustomInput
           name="name"
           label="Name"
-          placeholder="Electornic"
+          placeholder="card details"
           required={true}
           onChange={handleOnChange}
-          value={form.name}
         />
         <CustomInput
-          label="Slug"
-          name="slug"
+          label="description"
+          name="description"
           required={true}
           onChange={handleOnChange}
-          value={form.slug}
-          disabled={true}
         />
 
         <div className="d-grid">
           <Button type="submit" size="sm">
-            Update Category
+            Submit
           </Button>
         </div>
       </Form>
-    </div>
+
+      <Table striped bordered hover>
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Name</th>
+            <th>Description</th>
+            <th>State</th>
+          </tr>
+        </thead>
+        <tbody>
+          {paymentOption.map((item, i) => {
+            return (
+              <tr key={i}>
+                <td>{i + 1}</td>
+                <td>{item.name}</td>
+                <td>{item.description}</td>
+                <td>{item.status}</td>
+              </tr>
+            );
+          })}
+        </tbody>
+      </Table>
+    </>
   );
 };

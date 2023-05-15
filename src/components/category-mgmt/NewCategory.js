@@ -24,7 +24,7 @@ export const NewCategory = () => {
       lower: true, // convert to lower case, defaults to `false`
       trim: true, // trim leading and trailing replacement chars, defaults to `true`
     });
-    dispatch(addNewCategoryAction({ ...form, slug, adddAt: Date.now() }));
+    dispatch(addNewCategoryAction({ ...form, slug, addAt: Date.now() }));
   };
   return (
     <div style={{ maxWidth: "500px", margin: "auto" }}>

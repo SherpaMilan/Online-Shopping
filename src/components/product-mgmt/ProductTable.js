@@ -47,7 +47,7 @@ export const ProductTable = () => {
                   new Date(prod.salesEnds).toLocaleDateString()}
               </td>
               <td>
-                <Link to="/product/id">Edit</Link>
+                <Link to={`/product/${prod.slug}`}>Edit</Link>
               </td>
             </tr>
           ))}

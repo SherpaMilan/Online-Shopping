@@ -25,7 +25,7 @@ export const SideBar = () => {
             </Link>
           </li>
           <li>
-            <Link className="nav-link fw-bold " to="/payment-options">
+            <Link className="nav-link fw-bold " to="/payments">
               Payment Options
             </Link>
           </li>

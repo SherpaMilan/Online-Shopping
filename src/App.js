@@ -15,6 +15,8 @@ import { SignUp } from "./pages/signin-signup/SignUp";
 import { SignIn } from "./pages/signin-signup/SignIn";
 import { Category } from "./pages/category/Category";
 import NewProduct from "./pages/product/NewProduct";
+import EditProduct from "./pages/product/EditProduct";
+import { Payment } from "./pages/payment/Payment";
 
 function App() {
   const dispatch = useDispatch();
@@ -27,7 +29,7 @@ function App() {
     <div className="wrapper">
       <Routes>
         <Route path="/" element={<SignIn />} />
-        <Route path="reset-password" element={<ResetPassword />} />
+        <Route path="milan" element={<ResetPassword />} />
 
         {/* admin routes */}
         <Route
@@ -70,6 +72,24 @@ function App() {
             </PrivateRouter>
           }
         />
+
+        <Route
+          path="product/:slug"
+          element={
+            <PrivateRouter>
+              <EditProduct />
+            </PrivateRouter>
+          }
+        />
+        <Route
+          path="payments"
+          element={
+            <PrivateRouter>
+              <Payment />
+            </PrivateRouter>
+          }
+        />
+
         <Route path="*" element={<h1>Page Not Found!</h1>} />
       </Routes>
       <ToastContainer />

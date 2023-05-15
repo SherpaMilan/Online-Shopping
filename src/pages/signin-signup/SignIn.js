@@ -71,7 +71,7 @@ export const SignIn = () => {
           </div>
 
           <div className="text-end mt-2 mb-4">
-            Forget Password? <a href="/reset-password">Reset Password</a> Now.
+            Forget Password? <a href="/milan">Reset Password</a> Now.
           </div>
 
           <div className="d-grid mt-3">
