@@ -180,6 +180,7 @@ const NewProduct = () => {
             type="file"
             name="thumbnail"
             onChange={handleOnImageAttached}
+            multiple
           />
           <ProgressBar animated now={progress} />
         </Form.Group>
